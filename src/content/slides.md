@@ -16,7 +16,7 @@
 - it's not a 3D engine
 - it's a rasterization engine
 - it's about drawing points, lines, triangles
-- it's a low-level API to run code on the GPU
+- in order to draw these, you write code for the GPU
 
 ---
 
@@ -186,10 +186,17 @@ Create a buffer and provide data in a `Float32Array`
 # Set the attribute pointer
 
 ```js
-gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0);
+gl.vertexAttribPointer(
+  positionLoc, // pointer to attribute
+  2, // record size
+  gl.FLOAT, // type
+  false, // normalized
+  0,
+  0
+);
 ```
 
-Assign an attribute to a buffer
+This points the attribute to your data buffer
 
 ---
 
@@ -241,15 +248,10 @@ vec2 repeat(in vec2 p, in vec2 c) {
 
 # Thank you 👩‍💻
 
-## Feedback and Questions
-
-- talk to me afterwards 🙂
-- DM me on twitter (`@terabaud`)
-- or file an issue in my repo
-
 ## Resources
 
 - [https://lea.codes](https://lea.codes/)
 - [https://webglfundamentals.org](https://webglfundamentals.org)
 - [https://thebookofshaders.com/](https://thebookofshaders.com/)
 - [https://shadertoy.com](https://shadertoy.com)
+- [https://twitter.com/terabaud](https://twitter.com/terabaud)
