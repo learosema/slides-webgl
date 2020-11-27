@@ -1,0 +1,30 @@
+{
+  "name": "slides-all-things-webgl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm run copy-vendor",
+    "start": "concurrently 'npm:watch-css' 'npm:watch-html' 'npm:serve'",
+    "copy-vendor": "cp -r src/prism public/prism",
+    "build-html": "pug src/index.pug -O pug.config.js -o public",
+    "watch-html": "pug src/index.pug -O pug.config.js -o public -w",
+    "build-css": "sass src/scss/:public/css/",
+    "watch-css": "sass src/scss/:public/css/ --watch",
+    "serve": "node server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Lea Rosema",
+  "license": "MIT",
+  "devDependencies": {
+    "browser-sync": "^2.26.13",
+    "concurrently": "^5.3.0",
+    "express": "^4.17.1",
+    "jstransformer-markdown-it": "^2.1.0",
+    "pug": "^3.0.0",
+    "pug-cli": "^1.0.0-alpha6",
+    "sass": "^1.29.0"
+  },
+  "dependencies": {}
+}

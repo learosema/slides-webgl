@@ -1,0 +1,19 @@
+body {
+  color: $main-fg;
+  background: $main-bg;
+  height: 100vh;
+  margin: 0;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+@media (min-height: 400px) {
+  main {
+    scroll-snap-type: y mandatory;
+  }
+}
