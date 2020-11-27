@@ -31,6 +31,8 @@
 
 # WebGL pipeline
 
+## (roughly)
+
 1. Buffers
 2. Vertex shader
 3. Rasterization
