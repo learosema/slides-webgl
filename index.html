@@ -1,0 +1,193 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="author" content="Lea Rosema"/><meta name="keywords" content="WebGL, shaders, generative art"/><link rel="stylesheet" href="prism/prism.css"/><link rel="stylesheet" href="css/index.css"/><title>All Things WebGL</title></head><body><main><section class="slide"><h1>Creative Coding with WebGL</h1>
+</section><section class="slide">
+<h1>Hi! I'm Lea Rosema</h1>
+<ul>
+<li>Junior Frontend Developer at S2</li>
+<li>Digital artist, addicted to Codepen</li>
+<li><a target="_blank" rel="noopener noreferer" href="https://lea.codes/">https://lea.codes/</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://codepen/terabaud/">https://codepen/terabaud/</a></li>
+</ul>
+</section><section class="slide">
+<h1>What is WebGL?</h1>
+<ul>
+<li>it's not a 3D engine</li>
+<li>it's a rasterization engine</li>
+<li>it's about drawing points, lines, triangles</li>
+<li>in order to draw these, you write code for the GPU</li>
+</ul>
+</section><section class="slide">
+<h1>How to WebGL?</h1>
+<ul>
+<li>Vanilla JS WebGL</li>
+<li>Libraries on top of WebGL, eg. ThreeJS</li>
+<li>Game engines, running in WebAssembly+WebGL</li>
+<li>In this talk we're doing Vanilla JS WebGL :)</li>
+</ul>
+</section><section class="slide">
+<h1>WebGL pipeline</h1>
+<h2>(roughly)</h2>
+<ol>
+<li>Buffers</li>
+<li>Vertex shader</li>
+<li>Rasterization</li>
+<li>Fragment shader</li>
+<li>Pixels on Screen :)</li>
+</ol>
+</section><section class="slide">
+<h1>GL Shader Language</h1>
+<h2>How does it look like?</h2>
+<ul>
+<li>GPU-specific language GL Shader language (GLSL)</li>
+<li>It's like C++ with a <code>void main()</code></li>
+<li>...but with built-in datatypes and functions useful for 2D/3D</li>
+</ul>
+</section><section class="slide">
+<h1>Vertex shader code</h1>
+<pre><code class="language-glsl">attribute vec4 position;
+
+void main() {
+  gl_Position = position;
+}
+</code></pre>
+<ul>
+<li>input via the position attribute from a buffer</li>
+<li>the shader is run as many times as there's data</li>
+<li>the vertex position output via <code>gl_Position</code></li>
+</ul>
+</section><section class="slide">
+<h1>Fragment shader code</h1>
+<pre><code class="language-glsl">precision highp float;
+
+void main() {
+  vec2 p = gl_FragCoord.xy;
+  gl_FragColor = vec4(1.0, 0.5, 0, 1.0);
+}
+</code></pre>
+<ul>
+<li>The fragment shader is run for each fragment (pixel)</li>
+<li>pixel coordinate from <code>gl_FragCoord</code></li>
+<li>the output color is set in <code>gl_FragColor</code></li>
+</ul>
+</section><section class="slide">
+<h1>Passing Data from JS</h1>
+<ul>
+<li><code>attribute</code>: the vertex shader pulls a value from a buffer and stores it in here</li>
+<li><code>uniform</code>: pass variables you set in JS before you execute the shader</li>
+<li><code>varying</code>: pass values from the vertex shader to the fragment shader and interpolate values</li>
+</ul>
+</section><section class="slide">
+<h1>Let's try GLSL</h1>
+<h2><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/pen/OKVpYV?editors=0010">DEMO: Draw a triangle</a></h2>
+</section><section class="slide">
+<h1>GL Shader Language</h1>
+<h2>Datatypes</h2>
+<ul>
+<li>primitives (<code>bool</code>, <code>int</code>, <code>float</code>)</li>
+<li>vectors (<code>vec2</code>, <code>vec3</code>, <code>vec4</code>)</li>
+<li>matrices (<code>mat2</code>, <code>mat3</code>, <code>mat4</code>)</li>
+<li>texture data (<code>sampler2D</code>)</li>
+</ul>
+</section><section class="slide">
+<h1>GL Shader Language</h1>
+<h2>Cool built-in functions</h2>
+<ul>
+<li><code>sin</code>, <code>cos</code>, <code>atan</code></li>
+<li>Linear Interpolation (<code>mix</code>)</li>
+<li>Vector arithmetics (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>dot</code>, <code>cross</code>, <code>length</code>)</li>
+<li>Matrix arithmetics (<code>+</code>, <code>-</code>, <code>*</code>)</li>
+</ul>
+</section><section class="slide">
+<h1>JS</h1>
+<h2>Get the WebGL Context</h2>
+<pre><code class="language-js">const gl = canvas.getContext('webgl');
+</code></pre>
+<p>...just like initializing a 2D canvas</p>
+</section><section class="slide">
+<h1>JS: Compile Shaders</h1>
+<pre><code class="language-js">const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+gl.shaderSource(fragmentShader, fragmentCode);
+gl.compileShader(fragmentShader);
+const vertexShader = gl.createShader(gl.VERTEX_SHADER);
+gl.shaderSource(vertexShader, vertexCode);
+gl.compileShader(vertexShader);
+</code></pre>
+<p>Like in C++, compile your shaders first.</p>
+</section><section class="slide">
+<h1>JS: Create the program</h1>
+<pre><code class="language-js">const program = gl.createProgram();
+gl.attachShader(program, vertexShader);
+gl.attachShader(program, fragmentShader);
+gl.linkProgram();
+</code></pre>
+<p>Like in C++, link. Together they form a <code>WebGLProgram</code>.</p>
+</section><section class="slide">
+<h1>JS: Defining attributes for the vertex shader</h1>
+<pre><code class="language-js">const positionLoc = gl.getAttribLocation(program, 'position');
+gl.enableVertexAttribArray(positionLoc);
+</code></pre>
+<p>Activate your attribute via <code>enableVertexAttribArray</code></p>
+</section><section class="slide">
+<h1>Assign a buffer to the attribute</h1>
+<pre><code class="language-js">// provide 2D data for a triangle
+const data = [-1, -1, -1, 1, 1, -1];
+const buffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW);
+</code></pre>
+<p>Create a buffer and provide data in a <code>Float32Array</code></p>
+</section><section class="slide">
+<h1>Set the attribute pointer</h1>
+<pre><code class="language-js">gl.vertexAttribPointer(
+  positionLoc, // pointer to attribute
+  2, // record size
+  gl.FLOAT, // type
+  false, // normalized
+  0,
+  0
+);
+</code></pre>
+<p>This points the attribute to your data buffer</p>
+</section><section class="slide">
+<h1>Passing uniform variables</h1>
+<pre><code class="language-js">const uTime = gl.getUniformLocation(program, 'time');
+gl.uniform1f(uTime, tickCount);
+</code></pre>
+<ul>
+<li>Possible types: floats, ints, bools, vectors, matrices</li>
+<li>Pass variables from JavaScript to WebGL</li>
+<li>For example: pass the screen resolution, elapsed time, mouse position</li>
+</ul>
+</section><section class="slide">
+<h1>Running it in JS</h1>
+<h2>Draw</h2>
+<pre><code class="language-js">gl.drawArrays(gl.TRIANGLES);
+</code></pre>
+</section><section class="slide">
+<h1>Useful GLSL functions</h1>
+<pre><code class="language-glsl">//rotate
+vec2 rotate(vec2 p, float a) {
+  return vec2(p.x * cos(a) - p.y * sin(a),
+              p.x * sin(a) + p.y * cos(a));
+}
+
+//repeat
+vec2 repeat(in vec2 p, in vec2 c) {
+  return mod(p, c) - 0.5 * c;
+}
+</code></pre>
+</section><section class="slide">
+<h1>Putting it all together</h1>
+<ul>
+<li><a target="_blank" rel="noopener noreferer" href="">A full size shader in a Web Component</a></li>
+</ul>
+</section><section class="slide">
+<h1>Thank you 👩‍💻</h1>
+<h2>Resources</h2>
+<ul>
+<li><a target="_blank" rel="noopener noreferer" href="https://lea.codes/">https://lea.codes</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://webglfundamentals.org">https://webglfundamentals.org</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://thebookofshaders.com/">https://thebookofshaders.com/</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://shadertoy.com">https://shadertoy.com</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://twitter.com/terabaud">https://twitter.com/terabaud</a></li>
+</ul>
+</section></main><script src="prism/prism.js"></script></body></html>
