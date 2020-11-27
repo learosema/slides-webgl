@@ -6,7 +6,7 @@
   "scripts": {
     "prestart": "npm run copy-vendor -s",
     "start": "concurrently 'npm:watch-css' 'npm:watch-html' 'npm:serve'",
-    "build": "npm run clean && npm run copy-vendor -s && npn run build-css && npm run build-html",
+    "build": "npm run clean && npm run copy-vendor -s && npm run build-css && npm run build-html",
     "copy-vendor": "cp -r src/prism public/prism",
     "build-html": "pug src/index.pug -O pug.config.js -o public",
     "watch-html": "pug src/index.pug -O pug.config.js -o public -w",
@@ -14,7 +14,8 @@
     "watch-css": "sass src/scss/:public/css/ --watch",
     "serve": "node server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm -rf public && mkdir -p public",
+    "clean": "rm -rf public && mkdir public",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d public"
   },
   "keywords": [],
