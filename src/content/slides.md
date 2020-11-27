@@ -244,7 +244,7 @@ vec2 repeat(in vec2 p, in vec2 c) {
 
 # Putting it all together
 
-- [A full size shader in a Web Component]()
+- [A full size shader in a Web Component](https://codepen.io/terabaud/pen/zYBLbNX)
 
 ---
 
