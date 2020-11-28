@@ -163,31 +163,84 @@ gl.uniform1f(uTime, tickCount);
 <pre><code class="language-js">gl.drawArrays(gl.TRIANGLES);
 </code></pre>
 </section><section class="slide">
-<h1>Useful GLSL functions</h1>
-<pre><code class="language-glsl">//rotate
-vec2 rotate(vec2 p, float a) {
-  return vec2(p.x * cos(a) - p.y * sin(a),
-              p.x * sin(a) + p.y * cos(a));
-}
-
-//repeat
-vec2 repeat(in vec2 p, in vec2 c) {
-  return mod(p, c) - 0.5 * c;
-}
-</code></pre>
-</section><section class="slide">
 <h1>Putting it all together</h1>
 <ul>
 <li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/pen/zYBLbNX">A full size shader in a Web Component</a></li>
 </ul>
 </section><section class="slide">
+<h1>Coordinates</h1>
+<h2>Fragment shader</h2>
+<pre><code class="language-glsl">uniform vec2 resolution;
+vec2 p = (gl_FragCoord.xy / resolution - .5) * 2.;
+
+// aspect ratio correction
+float aspect = resolution.x / resolution.y;
+p.x *= aspect;
+</code></pre>
+</section><section class="slide">
+<h1>Coordinates from varying</h1>
+<h2>Vertex shader</h2>
+<pre><code class="language-glsl">attribute vec4 position;
+varying vec4 vPosition;
+vposition = position;
+</code></pre>
+<h2>Fragment Shader</h2>
+<pre><code class="language-glsl">// contains interpolated values
+varying vec4 vPosition;
+</code></pre>
+</section><section class="slide">
+<h1>Shapes with distance fields</h1>
+<pre><code class="language-glsl">float sdCircle(vec2 p, float radius) {
+  return length(p) - radius;
+}
+</code></pre>
+</section><section class="slide">
+<h1>Combining shapes</h1>
+<pre><code class="language-glsl">float add(float a, float b) {
+  return min(a, b);
+}
+
+float sub(float a, float b) {
+  return max(-a, b);
+}
+
+float symmetricDiff(float a, float b)
+{
+  return max(min(a, b), -max(a, b));
+}
+</code></pre>
+</section><section class="slide">
+<h1>Demos</h1>
+<ul>
+<li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/pen/dyoXjVv">Symmetric diff demo</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/pen/MWwjLxX">Combining Shapes demo</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/pen/MWeYvPv">Combining Shapes in 3D</a></li>
+</ul>
+</section><section class="slide">
+<h1>Transforming coordinates</h1>
+<h2>Rotate</h2>
+<pre><code class="language-glsl">vec2 rotate(vec2 p, float a) {
+  return vec2(p.x * cos(a) - p.y * sin(a),
+              p.x * sin(a) + p.y * cos(a));
+}
+</code></pre>
+</section><section class="slide">
+<h1>Transforming coordinates</h1>
+<h2>Repeat</h2>
+<pre><code class="language-glsl">vec2 repeat(in vec2 p, in vec2 c) {
+  return mod(p, c) - 0.5 * c;
+}
+</code></pre>
+</section><section class="slide">
 <h1>Thank you 👩‍💻</h1>
 <h2>Resources</h2>
 <ul>
-<li><a target="_blank" rel="noopener noreferer" href="https://lea.codes/">https://lea.codes</a></li>
-<li><a target="_blank" rel="noopener noreferer" href="https://webglfundamentals.org">https://webglfundamentals.org</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://lea.codes/">https://lea.codes/</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/">https://codepen.io/terabaud/</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://webglfundamentals.org/">https://webglfundamentals.org/</a></li>
 <li><a target="_blank" rel="noopener noreferer" href="https://thebookofshaders.com/">https://thebookofshaders.com/</a></li>
-<li><a target="_blank" rel="noopener noreferer" href="https://shadertoy.com">https://shadertoy.com</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://www.iquilezles.org/">https://www.iquilezles.org/</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://shadertoy.com/">https://shadertoy.com/</a></li>
 <li><a target="_blank" rel="noopener noreferer" href="https://twitter.com/terabaud">https://twitter.com/terabaud</a></li>
 </ul>
 </section></main><script src="prism/prism.js"></script></body></html>
