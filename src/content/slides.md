@@ -225,16 +225,101 @@ gl.drawArrays(gl.TRIANGLES);
 
 ---
 
-# Useful GLSL functions
+# Putting it all together
+
+- [A full size shader in a Web Component](https://codepen.io/terabaud/pen/zYBLbNX)
+
+---
+
+# Coordinates
+
+## Fragment shader
 
 ```glsl
-//rotate
+uniform vec2 resolution;
+vec2 p = (gl_FragCoord.xy / resolution - .5) * 2.;
+
+// aspect ratio correction
+float aspect = resolution.x / resolution.y;
+p.x *= aspect;
+```
+
+---
+
+# Coordinates from varying
+
+## Vertex shader
+
+```glsl
+attribute vec4 position;
+varying vec4 vPosition;
+vposition = position;
+```
+
+## Fragment Shader
+
+```glsl
+// contains interpolated values
+varying vec4 vPosition;
+```
+
+---
+
+# Shapes with distance fields
+
+```glsl
+float sdCircle(vec2 p, float radius) {
+  return length(p) - radius;
+}
+```
+
+---
+
+# Combining shapes
+
+```glsl
+float add(float a, float b) {
+  return min(a, b);
+}
+
+float sub(float a, float b) {
+  return max(-a, b);
+}
+
+float symmetricDiff(float a, float b)
+{
+  return max(min(a, b), -max(a, b));
+}
+```
+
+---
+
+# Demos
+
+- [Symmetric diff demo](https://codepen.io/terabaud/pen/dyoXjVv)
+- [Combining Shapes demo](https://codepen.io/terabaud/pen/MWwjLxX)
+- [Combining Shapes in 3D](https://codepen.io/terabaud/pen/MWeYvPv)
+
+---
+
+# Transforming coordinates
+
+## Rotate
+
+```glsl
 vec2 rotate(vec2 p, float a) {
   return vec2(p.x * cos(a) - p.y * sin(a),
               p.x * sin(a) + p.y * cos(a));
 }
+```
 
-//repeat
+---
+
+# Transforming coordinates
+
+## Repeat
+
+```glsl
 vec2 repeat(in vec2 p, in vec2 c) {
   return mod(p, c) - 0.5 * c;
 }
@@ -242,18 +327,14 @@ vec2 repeat(in vec2 p, in vec2 c) {
 
 ---
 
-# Putting it all together
-
-- [A full size shader in a Web Component](https://codepen.io/terabaud/pen/zYBLbNX)
-
----
-
 # Thank you 👩‍💻
 
 ## Resources
 
-- [https://lea.codes](https://lea.codes/)
-- [https://webglfundamentals.org](https://webglfundamentals.org)
+- [https://lea.codes/](https://lea.codes/)
+- [https://codepen.io/terabaud/](https://codepen.io/terabaud/)
+- [https://webglfundamentals.org/](https://webglfundamentals.org/)
 - [https://thebookofshaders.com/](https://thebookofshaders.com/)
-- [https://shadertoy.com](https://shadertoy.com)
+- [https://www.iquilezles.org/](https://www.iquilezles.org/)
+- [https://shadertoy.com/](https://shadertoy.com/)
 - [https://twitter.com/terabaud](https://twitter.com/terabaud)
