@@ -159,10 +159,10 @@ code {
 }
 
 pre[class] {
-  line-height: 1.2;
+  line-height: 1.1;
 }
 pre[class] code[class] {
-  font-size: 1.77rem;
+  font-size: 1.33rem;
 }
 
 body {

@@ -5,7 +5,8 @@
 <li>Junior Frontend Developer at S2</li>
 <li>Digital artist, addicted to Codepen</li>
 <li><a target="_blank" rel="noopener noreferer" href="https://lea.codes/">https://lea.codes/</a></li>
-<li><a target="_blank" rel="noopener noreferer" href="https://codepen/terabaud/">https://codepen/terabaud/</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/">https://codepen/terabaud/</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://twitter.com/terabaud">https://twitter.com/terabaud</a></li>
 </ul>
 </section><section class="slide">
 <h1>What is WebGL?</h1>
@@ -28,18 +29,20 @@
 <h2>(roughly)</h2>
 <ol>
 <li>Buffers</li>
-<li>Vertex shader</li>
-<li>Rasterization</li>
-<li>Fragment shader</li>
+<li>Vertex shader (processes buffer data)</li>
+<li>Rasterization (<a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/full/VwKLqdw">see how it works</a>)</li>
+<li>Fragment shader (<a target="_blank" rel="noopener noreferer" href="https://tixy.land/">processes pixels, it's like tixy</a>)</li>
 <li>Pixels on Screen :)</li>
 </ol>
 </section><section class="slide">
 <h1>GL Shader Language</h1>
-<h2>How does it look like?</h2>
 <ul>
+<li>Vertex and fragment shader are executed on the GPU</li>
 <li>GPU-specific language GL Shader language (GLSL)</li>
-<li>It's like C++ with a <code>void main()</code></li>
-<li>...but with built-in datatypes and functions useful for 2D/3D</li>
+<li>C++-like language with a <code>void main()</code></li>
+<li>built-in vector/matrix datatypes</li>
+<li><a target="_blank" rel="noopener noreferer" href="https://lea.codes/webgl/glsl-overview/">Rough language overview</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://thebookofshaders.com/">In detail: book of shaders</a></li>
 </ul>
 </section><section class="slide">
 <h1>Vertex shader code</h1>
@@ -74,27 +77,6 @@ void main() {
 <li><code>attribute</code>: the vertex shader pulls a value from a buffer and stores it in here</li>
 <li><code>uniform</code>: pass variables you set in JS before you execute the shader</li>
 <li><code>varying</code>: pass values from the vertex shader to the fragment shader and interpolate values</li>
-</ul>
-</section><section class="slide">
-<h1>Let's try GLSL</h1>
-<h2><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/pen/OKVpYV?editors=0010">DEMO: Draw a triangle</a></h2>
-</section><section class="slide">
-<h1>GL Shader Language</h1>
-<h2>Datatypes</h2>
-<ul>
-<li>primitives (<code>bool</code>, <code>int</code>, <code>float</code>)</li>
-<li>vectors (<code>vec2</code>, <code>vec3</code>, <code>vec4</code>)</li>
-<li>matrices (<code>mat2</code>, <code>mat3</code>, <code>mat4</code>)</li>
-<li>texture data (<code>sampler2D</code>)</li>
-</ul>
-</section><section class="slide">
-<h1>GL Shader Language</h1>
-<h2>Cool built-in functions</h2>
-<ul>
-<li><code>sin</code>, <code>cos</code>, <code>atan</code></li>
-<li>Linear Interpolation (<code>mix</code>)</li>
-<li>Vector arithmetics (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>dot</code>, <code>cross</code>, <code>length</code>)</li>
-<li>Matrix arithmetics (<code>+</code>, <code>-</code>, <code>*</code>)</li>
 </ul>
 </section><section class="slide">
 <h1>JS</h1>
@@ -163,13 +145,14 @@ gl.uniform1f(uTime, tickCount);
 <pre><code class="language-js">gl.drawArrays(gl.TRIANGLES);
 </code></pre>
 </section><section class="slide">
-<h1>Putting it all together</h1>
+<h1>Examples</h1>
 <ul>
-<li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/pen/zYBLbNX">A full size shader in a Web Component</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/pen/OKVpYV?editors=0010">A triangle</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/pen/pobKqay">A full size shader in a Web Component</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/pen/zYBLbNX">A more advanced demo</a></li>
 </ul>
 </section><section class="slide">
-<h1>Coordinates</h1>
-<h2>Fragment shader</h2>
+<h1>Get pixel coordinates</h1>
 <pre><code class="language-glsl">uniform vec2 resolution;
 vec2 p = (gl_FragCoord.xy / resolution - .5) * 2.;
 
@@ -189,23 +172,37 @@ vposition = position;
 varying vec4 vPosition;
 </code></pre>
 </section><section class="slide">
-<h1>Shapes with distance fields</h1>
+<h1>Making 2D shapes with fragment shaders</h1>
+<ul>
+<li>via Signed distance fields (SDFs)</li>
+<li>basically a function</li>
+<li>takes a point and returns distance to the nearest object</li>
+<li>if it returns a number less than zero, the point is inside an object</li>
+</ul>
+</section><section class="slide">
+<h1>SDF distance functions</h1>
 <pre><code class="language-glsl">float sdCircle(vec2 p, float radius) {
   return length(p) - radius;
 }
+
+float scene(vec2 p) {
+  return sdCircle(p, 1.);
+}
 </code></pre>
+<ul>
+<li>See <a target="_blank" rel="noopener noreferer" href="https://www.iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm">more distance functions</a></li>
+</ul>
 </section><section class="slide">
 <h1>Combining shapes</h1>
-<pre><code class="language-glsl">float add(float a, float b) {
+<pre><code class="language-glsl">float merge(float a, float b) {
   return min(a, b);
 }
 
-float sub(float a, float b) {
+float substract(float a, float b) {
   return max(-a, b);
 }
 
-float symmetricDiff(float a, float b)
-{
+float symmetricDiff(float a, float b) {
   return max(min(a, b), -max(a, b));
 }
 </code></pre>
@@ -235,12 +232,12 @@ float symmetricDiff(float a, float b)
 <h1>Thank you 👩‍💻</h1>
 <h2>Resources</h2>
 <ul>
+<li><a target="_blank" rel="noopener noreferer" href="https://terabaud.github.io/slides-webgl/">https://terabaud.github.io/slides-webgl/</a></li>
 <li><a target="_blank" rel="noopener noreferer" href="https://lea.codes/">https://lea.codes/</a></li>
 <li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/">https://codepen.io/terabaud/</a></li>
 <li><a target="_blank" rel="noopener noreferer" href="https://webglfundamentals.org/">https://webglfundamentals.org/</a></li>
 <li><a target="_blank" rel="noopener noreferer" href="https://thebookofshaders.com/">https://thebookofshaders.com/</a></li>
 <li><a target="_blank" rel="noopener noreferer" href="https://www.iquilezles.org/">https://www.iquilezles.org/</a></li>
 <li><a target="_blank" rel="noopener noreferer" href="https://shadertoy.com/">https://shadertoy.com/</a></li>
-<li><a target="_blank" rel="noopener noreferer" href="https://twitter.com/terabaud">https://twitter.com/terabaud</a></li>
 </ul>
 </section></main><script src="prism/prism.js"></script></body></html>
