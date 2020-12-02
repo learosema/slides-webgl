@@ -8,6 +8,7 @@
 - Digital artist, addicted to Codepen
 - [https://lea.codes/](https://lea.codes/)
 - [https://codepen/terabaud/](https://codepen/terabaud/)
+- [https://twitter.com/terabaud](https://twitter.com/terabaud)
 
 ---
 
@@ -34,20 +35,21 @@
 ## (roughly)
 
 1. Buffers
-2. Vertex shader
-3. Rasterization
-4. Fragment shader
+2. Vertex shader (processes buffer data)
+3. Rasterization ([see how it works](https://codepen.io/terabaud/full/VwKLqdw))
+4. Fragment shader ([processes pixels, it's like tixy](https://tixy.land/))
 5. Pixels on Screen :)
 
 ---
 
 # GL Shader Language
 
-## How does it look like?
-
+- Vertex and fragment shader are executed on the GPU
 - GPU-specific language GL Shader language (GLSL)
-- It's like C++ with a `void main()`
-- ...but with built-in datatypes and functions useful for 2D/3D
+- C++-like language with a `void main()`
+- built-in vector/matrix datatypes
+- [Rough language overview](https://lea.codes/webgl/glsl-overview/)
+- [In detail: book of shaders](https://thebookofshaders.com/)
 
 ---
 
@@ -89,34 +91,6 @@ void main() {
 - `attribute`: the vertex shader pulls a value from a buffer and stores it in here
 - `uniform`: pass variables you set in JS before you execute the shader
 - `varying`: pass values from the vertex shader to the fragment shader and interpolate values
-
----
-
-# Let's try GLSL
-
-## [DEMO: Draw a triangle](https://codepen.io/terabaud/pen/OKVpYV?editors=0010)
-
----
-
-# GL Shader Language
-
-## Datatypes
-
-- primitives (`bool`, `int`, `float`)
-- vectors (`vec2`, `vec3`, `vec4`)
-- matrices (`mat2`, `mat3`, `mat4`)
-- texture data (`sampler2D`)
-
----
-
-# GL Shader Language
-
-## Cool built-in functions
-
-- `sin`, `cos`, `atan`
-- Linear Interpolation (`mix`)
-- Vector arithmetics (`+`, `-`, `*`, `/`, `dot`, `cross`, `length`)
-- Matrix arithmetics (`+`, `-`, `*`)
 
 ---
 
@@ -225,15 +199,15 @@ gl.drawArrays(gl.TRIANGLES);
 
 ---
 
-# Putting it all together
+# Examples
 
-- [A full size shader in a Web Component](https://codepen.io/terabaud/pen/zYBLbNX)
+- [A triangle](https://codepen.io/terabaud/pen/OKVpYV?editors=0010)
+- [A full size shader in a Web Component](https://codepen.io/terabaud/pen/pobKqay)
+- [A more advanced demo](https://codepen.io/terabaud/pen/zYBLbNX)
 
 ---
 
-# Coordinates
-
-## Fragment shader
+# Get pixel coordinates
 
 ```glsl
 uniform vec2 resolution;
@@ -265,29 +239,43 @@ varying vec4 vPosition;
 
 ---
 
-# Shapes with distance fields
+# Making 2D shapes with fragment shaders
+
+- via Signed distance fields (SDFs)
+- basically a function
+- takes a point and returns distance to the nearest object
+- if it returns a number less than zero, the point is inside an object
+
+---
+
+# SDF distance functions
 
 ```glsl
 float sdCircle(vec2 p, float radius) {
   return length(p) - radius;
 }
+
+float scene(vec2 p) {
+  return sdCircle(p, 1.);
+}
 ```
+
+- See [more distance functions](https://www.iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm)
 
 ---
 
 # Combining shapes
 
 ```glsl
-float add(float a, float b) {
+float merge(float a, float b) {
   return min(a, b);
 }
 
-float sub(float a, float b) {
+float substract(float a, float b) {
   return max(-a, b);
 }
 
-float symmetricDiff(float a, float b)
-{
+float symmetricDiff(float a, float b) {
   return max(min(a, b), -max(a, b));
 }
 ```
@@ -331,10 +319,10 @@ vec2 repeat(in vec2 p, in vec2 c) {
 
 ## Resources
 
+- [https://terabaud.github.io/slides-webgl/](https://terabaud.github.io/slides-webgl/)
 - [https://lea.codes/](https://lea.codes/)
 - [https://codepen.io/terabaud/](https://codepen.io/terabaud/)
 - [https://webglfundamentals.org/](https://webglfundamentals.org/)
 - [https://thebookofshaders.com/](https://thebookofshaders.com/)
 - [https://www.iquilezles.org/](https://www.iquilezles.org/)
 - [https://shadertoy.com/](https://shadertoy.com/)
-- [https://twitter.com/terabaud](https://twitter.com/terabaud)
