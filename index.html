@@ -1,21 +1,24 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="author" content="Lea Rosema"/><meta name="keywords" content="WebGL, shaders, generative art"/><link rel="stylesheet" href="prism/prism.css"/><link rel="stylesheet" href="css/index.css"/><title>All Things WebGL</title></head><body><main><section class="slide"><h1>Creative Coding with WebGL</h1>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="author" content="Lea Rosema"/><meta name="keywords" content="WebGL, shaders, generative art"/><link rel="stylesheet" href="css/index.css"/><title>All Things WebGL</title></head><body><main><section class="slide"><h1>Creative Coding with WebGL</h1>
 </section><section class="slide">
 <h1>Hi! I'm Lea Rosema</h1>
 <ul>
-<li>Junior Frontend Developer at S2</li>
-<li>Digital artist, addicted to Codepen</li>
+<li>Frontend Developer at SinnerSchrader, Part of Accenture Interactive</li>
 <li><a target="_blank" rel="noopener noreferer" href="https://lea.codes/">https://lea.codes/</a></li>
 <li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/">https://codepen.io/terabaud/</a></li>
-<li><a target="_blank" rel="noopener noreferer" href="https://twitter.com/terabaud">https://twitter.com/terabaud</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://twitter.com/terabaud">@terabaud</a></li>
+</ul>
+</section><section class="slide">
+<h1>Slides to my talk</h1>
+<ul>
 <li><a target="_blank" rel="noopener noreferer" href="https://terabaud.github.io/slides-webgl/">https://terabaud.github.io/slides-webgl/</a></li>
 </ul>
 </section><section class="slide">
 <h1>What is WebGL?</h1>
 <ul>
 <li>it's not a 3D engine</li>
-<li>it's a rasterization engine</li>
-<li>it's about drawing points, lines, triangles</li>
-<li>in order to draw these, you write code for the GPU</li>
+<li>it's low level a rasterization engine</li>
+<li>drawing points, lines, triangles, super fast</li>
+<li>runs on the GPU</li>
 </ul>
 </section><section class="slide">
 <h1>How to WebGL?</h1>
@@ -31,9 +34,9 @@
 <ol>
 <li>Buffers</li>
 <li>Vertex shader (processes buffer data)</li>
-<li>Rasterization (<a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/full/VwKLqdw">see how it works</a>)</li>
-<li>Fragment shader (<a target="_blank" rel="noopener noreferer" href="https://tixy.land/">processes pixels, it's like tixy</a>)</li>
-<li>Pixels on Screen :)</li>
+<li>Rasterization (<a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/full/VwKLqdw">demo</a>)</li>
+<li>Fragment shader (<a target="_blank" rel="noopener noreferer" href="https://tixy.land/">like: tixyland</a>)</li>
+<li>Pixels on Screen 🟥 🟩 🟦</li>
 </ol>
 </section><section class="slide">
 <h1>GL Shader Language</h1>
@@ -150,7 +153,9 @@ gl.uniform1f(uTime, tickCount);
 <ul>
 <li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/pen/OKVpYV?editors=0010">A triangle</a></li>
 <li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/pen/pobKqay">A full size shader in a Web Component</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/pen/vYyXGKG">Queer Valentines Day</a></li>
 <li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/pen/zYBLbNX">A more advanced demo</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/pen/xxROeRJ">A Demo with using textures</a></li>
 </ul>
 </section><section class="slide">
 <h1>Get pixel coordinates</h1>
@@ -231,14 +236,12 @@ float symmetricDiff(float a, float b) {
 </code></pre>
 </section><section class="slide">
 <h1>Thank you 👩‍💻</h1>
-<h2>Resources</h2>
+<h2>Further Resources</h2>
 <ul>
-<li><a target="_blank" rel="noopener noreferer" href="https://terabaud.github.io/slides-webgl/">https://terabaud.github.io/slides-webgl/</a></li>
-<li><a target="_blank" rel="noopener noreferer" href="https://lea.codes/">https://lea.codes/</a></li>
-<li><a target="_blank" rel="noopener noreferer" href="https://codepen.io/terabaud/">https://codepen.io/terabaud/</a></li>
 <li><a target="_blank" rel="noopener noreferer" href="https://webglfundamentals.org/">https://webglfundamentals.org/</a></li>
 <li><a target="_blank" rel="noopener noreferer" href="https://thebookofshaders.com/">https://thebookofshaders.com/</a></li>
 <li><a target="_blank" rel="noopener noreferer" href="https://www.iquilezles.org/">https://www.iquilezles.org/</a></li>
 <li><a target="_blank" rel="noopener noreferer" href="https://shadertoy.com/">https://shadertoy.com/</a></li>
+<li><a target="_blank" rel="noopener noreferer" href="https://tixy.land">https://tixy.land by M.Kleppe</a></li>
 </ul>
 </section></main><script src="prism/prism.js"></script></body></html>
