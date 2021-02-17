@@ -4,11 +4,15 @@
 
 # Hi! I'm Lea Rosema
 
-- Junior Frontend Developer at S2
-- Digital artist, addicted to Codepen
+- Frontend Developer at SinnerSchrader, Part of Accenture Interactive
 - [https://lea.codes/](https://lea.codes/)
 - [https://codepen.io/terabaud/](https://codepen.io/terabaud/)
-- [https://twitter.com/terabaud](https://twitter.com/terabaud)
+- [@terabaud](https://twitter.com/terabaud)
+
+---
+
+# Slides to my talk
+
 - [https://terabaud.github.io/slides-webgl/](https://terabaud.github.io/slides-webgl/)
 
 ---
@@ -16,9 +20,9 @@
 # What is WebGL?
 
 - it's not a 3D engine
-- it's a rasterization engine
-- it's about drawing points, lines, triangles
-- in order to draw these, you write code for the GPU
+- it's low level a rasterization engine
+- drawing points, lines, triangles, super fast
+- runs on the GPU
 
 ---
 
@@ -37,9 +41,9 @@
 
 1. Buffers
 2. Vertex shader (processes buffer data)
-3. Rasterization ([see how it works](https://codepen.io/terabaud/full/VwKLqdw))
-4. Fragment shader ([processes pixels, it's like tixy](https://tixy.land/))
-5. Pixels on Screen :)
+3. Rasterization ([demo](https://codepen.io/terabaud/full/VwKLqdw))
+4. Fragment shader ([like: tixyland](https://tixy.land/))
+5. Pixels on Screen 🟥 🟩 🟦
 
 ---
 
@@ -204,7 +208,9 @@ gl.drawArrays(gl.TRIANGLES);
 
 - [A triangle](https://codepen.io/terabaud/pen/OKVpYV?editors=0010)
 - [A full size shader in a Web Component](https://codepen.io/terabaud/pen/pobKqay)
+- [Queer Valentines Day](https://codepen.io/terabaud/pen/vYyXGKG)
 - [A more advanced demo](https://codepen.io/terabaud/pen/zYBLbNX)
+- [A Demo with using textures](https://codepen.io/terabaud/pen/xxROeRJ)
 
 ---
 
@@ -318,12 +324,10 @@ vec2 repeat(in vec2 p, in vec2 c) {
 
 # Thank you 👩‍💻
 
-## Resources
+## Further Resources
 
-- [https://terabaud.github.io/slides-webgl/](https://terabaud.github.io/slides-webgl/)
-- [https://lea.codes/](https://lea.codes/)
-- [https://codepen.io/terabaud/](https://codepen.io/terabaud/)
 - [https://webglfundamentals.org/](https://webglfundamentals.org/)
 - [https://thebookofshaders.com/](https://thebookofshaders.com/)
 - [https://www.iquilezles.org/](https://www.iquilezles.org/)
 - [https://shadertoy.com/](https://shadertoy.com/)
+- [https://tixy.land by M.Kleppe](https://tixy.land)
